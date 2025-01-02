@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Search, ShoppingCart, Heart, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -56,32 +56,41 @@ const categorias = [
 ];
 
 export default function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
   useEffect(() => {
-    const setScrollbarWidth = () => {
-      document.documentElement.style.setProperty(
-        "--scrollbar-width",
-        `${window.innerWidth - document.documentElement.clientWidth}px`
-      );
+    const handleScroll = () => {
+      if (window.scrollY > 0) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
     };
 
-    setScrollbarWidth();
-    window.addEventListener("resize", setScrollbarWidth);
+    window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener("resize", setScrollbarWidth);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
-    <nav className="w-screen bg-white text-black py-4 fixed top-[32px] left-0 z-40 border-b">
+    <nav
+      className={`w-[100vw] bg-white text-black py-4 fixed top-[32px] left-0 z-40 border-b transition-all duration-300 ${
+        isScrolled ? "rounded-b-[4rem]" : ""
+      }`}
+    >
       <div className="container mx-auto px-4 flex items-center justify-between gap-8">
-        {/* Logo */}
-        <Link href="/" className="flex items-center">
+        {/* Logo y Título */}
+        <Link href="/" className="flex items-center gap-2">
           <Image
-            src="/logo.svg"
-            alt="Exclusive Logo"
-            width={120}
+            src="/logo_nytek.jpeg"
+            alt="Nytek Logo"
+            width={40}
             height={40}
-            className="object-contain"
+            className="rounded-full"
           />
+          <span className="text-2xl font-bold">Nytek</span>
         </Link>
 
         {/* Enlaces de Navegación */}

@@ -6,8 +6,8 @@ interface ProductCardProps {
   id: string;
   name: string;
   image: string;
-  price: number;
-  originalPrice: number;
+  price: string;
+  originalPrice: string;
   discount: number;
   rating: number;
   reviews: number;
@@ -31,15 +31,15 @@ export function ProductCard({
   return (
     <div className="group relative bg-white p-4 rounded-lg">
       {discount > 0 && (
-        <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm rounded">
+        <div className="absolute top-4 left-4 bg-red-500 text-white text-xs font-medium px-2 py-1 rounded z-10">
           -{discount}%
         </div>
       )}
-      <div className="absolute top-2 right-2 flex flex-col gap-2">
+      <div className="absolute top-4 right-4 flex flex-col gap-2 z-10">
         <Button
           variant="ghost"
           size="icon"
-          className="bg-white hover:bg-gray-100"
+          className="bg-white hover:bg-gray-100 shadow-sm"
           onClick={onToggleWishlist}
         >
           <Heart className="h-5 w-5" />
@@ -47,7 +47,7 @@ export function ProductCard({
         <Button
           variant="ghost"
           size="icon"
-          className="bg-white hover:bg-gray-100"
+          className="bg-white hover:bg-gray-100 shadow-sm"
           onClick={onQuickView}
         >
           <Eye className="h-5 w-5" />
@@ -58,8 +58,8 @@ export function ProductCard({
       </div>
       <h3 className="font-medium mb-2">{name}</h3>
       <div className="flex items-center gap-2 mb-2">
-        <span className="text-red-500 font-bold">${price}</span>
-        <span className="text-gray-500 line-through">${originalPrice}</span>
+        <span className="text-red-500 font-bold">{price}</span>
+        <span className="text-gray-500 line-through">{originalPrice}</span>
       </div>
       <div className="flex items-center gap-2 mb-4">
         <div className="flex text-yellow-400">
@@ -75,7 +75,7 @@ export function ProductCard({
         className="w-full bg-black text-white hover:bg-black/90"
         onClick={onAddToCart}
       >
-        Add To Cart
+        Agregar al Carrito
       </Button>
     </div>
   );

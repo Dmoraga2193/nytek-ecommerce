@@ -7,7 +7,7 @@ import Navbar from "@/components/navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Exclusive - E-commerce Store",
+  title: "Nytek - E-commerce Store",
   description: "Your one-stop shop for all your needs",
 };
 
