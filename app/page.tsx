@@ -1,6 +1,7 @@
 import { HeroCarousel } from "@/components/hero-carousel";
 import { FlashSales } from "@/components/flash-sales";
 import { FullScreenVideo } from "@/components/full-screen-video";
+import { CategoriesShowcase } from "@/components/categories-showcase";
 
 export default function Home() {
   return (
@@ -16,6 +17,9 @@ export default function Home() {
 
         {/* Flash Sales Section */}
         <FlashSales />
+
+        {/* Categories Showcase */}
+        <CategoriesShowcase />
       </div>
     </div>
   );

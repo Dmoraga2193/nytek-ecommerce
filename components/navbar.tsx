@@ -15,42 +15,47 @@ import {
 
 const categorias = [
   {
-    nombre: "Smartphones",
+    nombre: "iPhone",
     subcategorias: [
-      { href: "/categoria/smartphones/apple", etiqueta: "Apple" },
-      { href: "/categoria/smartphones/samsung", etiqueta: "Samsung" },
-      { href: "/categoria/smartphones/xiaomi", etiqueta: "Xiaomi" },
-      { href: "/categoria/smartphones/huawei", etiqueta: "Huawei" },
+      { href: "/categoria/iphone/iphone-16", etiqueta: "iPhone 16" },
+      { href: "/categoria/iphone/iphone-15", etiqueta: "iPhone 15" },
+      { href: "/categoria/iphone/iphone-14", etiqueta: "iPhone 14" },
+      { href: "/categoria/iphone/iphone-13", etiqueta: "iPhone 13" },
     ],
   },
   {
-    nombre: "Tablets",
+    nombre: "MacBooks",
     subcategorias: [
-      { href: "/categoria/tablets/ipad", etiqueta: "iPad" },
+      { href: "/categoria/macbooks/macbook-air", etiqueta: "MacBook Air" },
       {
-        href: "/categoria/tablets/samsung-galaxy-tab",
-        etiqueta: "Samsung Galaxy Tab",
+        href: "/categoria/macbooks/macbook-pro-13",
+        etiqueta: "MacBook Pro 13",
       },
-      { href: "/categoria/tablets/lenovo", etiqueta: "Lenovo" },
-      { href: "/categoria/tablets/huawei", etiqueta: "Huawei" },
+      {
+        href: "/categoria/macbooks/macbook-pro-14",
+        etiqueta: "MacBook Pro 14",
+      },
+      {
+        href: "/categoria/macbooks/macbook-pro-16",
+        etiqueta: "MacBook Pro 16",
+      },
     ],
   },
   {
-    nombre: "Portátiles",
+    nombre: "iPads",
     subcategorias: [
-      { href: "/categoria/portatiles/macbook", etiqueta: "MacBook" },
-      { href: "/categoria/portatiles/dell", etiqueta: "Dell" },
-      { href: "/categoria/portatiles/hp", etiqueta: "HP" },
-      { href: "/categoria/portatiles/lenovo", etiqueta: "Lenovo" },
+      { href: "/categoria/ipads/ipad-pro", etiqueta: "iPad Pro" },
+      { href: "/categoria/ipads/ipad-air", etiqueta: "iPad Air" },
+      { href: "/categoria/ipads/ipad", etiqueta: "iPad" },
+      { href: "/categoria/ipads/ipad-mini", etiqueta: "iPad mini" },
     ],
   },
   {
     nombre: "Accesorios",
     subcategorias: [
-      { href: "/categoria/accesorios/auriculares", etiqueta: "Auriculares" },
+      { href: "/categoria/accesorios/airpods", etiqueta: "AirPods" },
+      { href: "/categoria/accesorios/apple-watch", etiqueta: "Apple Watch" },
       { href: "/categoria/accesorios/cargadores", etiqueta: "Cargadores" },
-      { href: "/categoria/accesorios/fundas", etiqueta: "Fundas" },
-      { href: "/categoria/accesorios/smartwatches", etiqueta: "Smartwatches" },
     ],
   },
 ];
@@ -88,9 +93,8 @@ export default function Navbar() {
             alt="Nytek Logo"
             width={40}
             height={40}
-            className="rounded-full"
           />
-          <span className="text-2xl font-bold">Nytek</span>
+          <Image src="/logo.svg" alt="Nytek Logo" width={120} height={120} />
         </Link>
 
         {/* Enlaces de Navegación */}

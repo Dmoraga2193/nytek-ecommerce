@@ -6,63 +6,83 @@ interface CountdownTimerProps {
   targetDate: Date;
 }
 
+interface TimeLeft {
+  dias: number;
+  horas: number;
+  minutos: number;
+  segundos: number;
+  total: number;
+}
+
 export function CountdownTimer({ targetDate }: CountdownTimerProps) {
-  const [timeLeft, setTimeLeft] = useState({
-    days: "00",
-    hours: "00",
-    minutes: "00",
-    seconds: "00",
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
+    dias: 0,
+    horas: 0,
+    minutos: 0,
+    segundos: 0,
+    total: 0,
   });
 
   useEffect(() => {
-    const timer = setInterval(() => {
+    if (!targetDate) return;
+
+    function calculateTimeLeft(): TimeLeft {
       const now = new Date().getTime();
-      const distance = targetDate.getTime() - now;
+      const difference = targetDate.getTime() - now;
 
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-      );
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-      setTimeLeft({
-        days: days.toString().padStart(2, "0"),
-        hours: hours.toString().padStart(2, "0"),
-        minutes: minutes.toString().padStart(2, "0"),
-        seconds: seconds.toString().padStart(2, "0"),
-      });
-
-      if (distance < 0) {
-        clearInterval(timer);
+      if (difference <= 0) {
+        return {
+          dias: 0,
+          horas: 0,
+          minutos: 0,
+          segundos: 0,
+          total: 0,
+        };
       }
-    }, 1000);
 
+      return {
+        dias: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        horas: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutos: Math.floor((difference / 1000 / 60) % 60),
+        segundos: Math.floor((difference / 1000) % 60),
+        total: difference,
+      };
+    }
+
+    function updateTimeLeft() {
+      setTimeLeft(calculateTimeLeft());
+    }
+
+    // Initial update
+    updateTimeLeft();
+
+    // Set up interval for updates
+    const timer = setInterval(updateTimeLeft, 1000);
+
+    // Clean up interval on unmount
     return () => clearInterval(timer);
   }, [targetDate]);
 
   return (
-    <div className="flex items-center gap-4 mt-2">
-      <div className="flex items-center gap-1 mt-8">
-        <div className="flex flex-col items-center">
-          <span className="text-2xl font-bold">{timeLeft.days}</span>
-          <span className="text-xs text-gray-500">Dias</span>
-        </div>
-        <div className="text-red-500 text-2xl font-bold">:</div>
-        <div className="flex flex-col items-center">
-          <span className="text-2xl font-bold">{timeLeft.hours}</span>
-          <span className="text-xs text-gray-500">Horas</span>
-        </div>
-        <div className="text-red-500 text-2xl font-bold">:</div>
-        <div className="flex flex-col items-center">
-          <span className="text-2xl font-bold">{timeLeft.minutes}</span>
-          <span className="text-xs text-gray-500">Minutos</span>
-        </div>
-        <div className="text-red-500 text-2xl font-bold">:</div>
-        <div className="flex flex-col items-center">
-          <span className="text-2xl font-bold">{timeLeft.seconds}</span>
-          <span className="text-xs text-gray-500">Segundos</span>
-        </div>
+    <div className="flex items-center gap-4 text-lg">
+      <div className="flex flex-col items-center">
+        <span className="font-bold text-2xl">{timeLeft.dias}</span>
+        <span className="text-sm text-gray-500">Días</span>
+      </div>
+      <span className="font-bold">:</span>
+      <div className="flex flex-col items-center">
+        <span className="font-bold text-2xl">{timeLeft.horas}</span>
+        <span className="text-sm text-gray-500">Horas</span>
+      </div>
+      <span className="font-bold">:</span>
+      <div className="flex flex-col items-center">
+        <span className="font-bold text-2xl">{timeLeft.minutos}</span>
+        <span className="text-sm text-gray-500">Minutos</span>
+      </div>
+      <span className="font-bold">:</span>
+      <div className="flex flex-col items-center">
+        <span className="font-bold text-2xl">{timeLeft.segundos}</span>
+        <span className="text-sm text-gray-500">Segundos</span>
       </div>
     </div>
   );

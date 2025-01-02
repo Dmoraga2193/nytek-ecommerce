@@ -5,7 +5,7 @@ import { supabase } from "@/lib/supabase";
 export async function agregarProducto({
   nombre,
   precio,
-  urlImagen,
+  urlsImagenes,
   descripcion,
   categoriaId,
   marcaId,
@@ -13,32 +13,42 @@ export async function agregarProducto({
 }: {
   nombre: string;
   precio: number;
-  urlImagen: string;
+  urlsImagenes: string[];
   descripcion?: string;
   categoriaId?: string;
   marcaId?: string;
   cantidadStock: number;
 }) {
-  const { data, error } = await supabase
-    .from("productos")
-    .insert([
-      {
-        nombre,
-        precio,
-        url_imagen: urlImagen,
-        descripcion,
-        categoria_id: categoriaId,
-        marca_id: marcaId,
-        cantidad_stock: cantidadStock,
-      },
-    ])
-    .select();
+  try {
+    const { data, error } = await supabase
+      .from("productos")
+      .insert([
+        {
+          nombre,
+          precio,
+          imagenes: urlsImagenes,
+          descripcion,
+          categoria_id: categoriaId,
+          marca_id: marcaId,
+          cantidad_stock: cantidadStock,
+          creado_en: new Date().toISOString(),
+          actualizado_en: new Date().toISOString(),
+        },
+      ])
+      .select();
 
-  if (error) {
-    throw new Error("Error al agregar el producto");
+    if (error) {
+      console.error("Error de Supabase:", error);
+      throw new Error(`Error al agregar el producto: ${error.message}`);
+    }
+
+    return data;
+  } catch (error) {
+    console.error("Error en agregarProducto:", error);
+    throw error instanceof Error
+      ? error
+      : new Error("Error desconocido al agregar el producto");
   }
-
-  return data;
 }
 
 export async function obtenerCategorias() {
@@ -90,20 +100,26 @@ export async function agregarCategoria({
 
 export async function agregarMarca({
   nombre,
-  descripcion,
   urlLogo,
 }: {
   nombre: string;
-  descripcion?: string;
-  urlLogo?: string;
+  urlLogo: string | null | undefined;
 }) {
   const { data, error } = await supabase
     .from("marcas")
-    .insert([{ nombre, descripcion, url_logo: urlLogo }])
+    .insert([
+      {
+        nombre,
+        url_logo: urlLogo,
+        creado_en: new Date().toISOString(),
+        actualizado_en: new Date().toISOString(),
+      },
+    ])
     .select();
 
   if (error) {
-    throw new Error("Error al agregar la marca");
+    console.error("Error en agregarMarca:", error);
+    throw new Error(`Error al agregar la marca: ${error.message}`);
   }
 
   return data;

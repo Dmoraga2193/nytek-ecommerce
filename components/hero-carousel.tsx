@@ -9,7 +9,7 @@ const slides = [
   {
     id: 1,
     image: "/carusel hero/carusel_hero_1.webp",
-    logo: "/carusel logo/apple-logo.png",
+    logo: "/marcas/apple_blanco.png",
     title: "iPhone 16 Series",
     discount: "Hasta un 10%",
     type: "de Descuento",
@@ -18,7 +18,7 @@ const slides = [
   {
     id: 2,
     image: "/carusel hero/carusel_hero_2.webp",
-    logo: "/carusel logo/apple-logo.png",
+    logo: "/marcas/apple_blanco.png",
     title: "iPhone 16 Series",
     discount: "Descubre lo nuevo",
     type: "del Iphone 16",

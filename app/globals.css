@@ -65,8 +65,20 @@ body {
 
 body {
   overflow-x: hidden;
-  margin-right: 0;
-  padding-right: 0;
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+  width: 100vw;
+  position: relative;
+}
+
+body[style] {
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+  overflow-y: auto !important;
+}
+
+[data-radix-popper-content-wrapper] {
+  position: fixed !important;
 }
 
 html {

@@ -1,51 +1,84 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { supabase } from "@/lib/supabase";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { agregarCategoria } from "@/app/actions";
+import { Textarea } from "@/components/ui/textarea";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { toast } from "sonner";
 
 export function CategoryForm() {
-  const [nombre, setNombre] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    nombre: "",
+    descripcion: "",
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setLoading(true);
+
     try {
-      await agregarCategoria({ nombre, descripcion });
-      setNombre("");
-      setDescripcion("");
-      router.refresh();
+      const { error } = await supabase.from("categorias").insert([
+        {
+          nombre: formData.nombre,
+          descripcion: formData.descripcion,
+        },
+      ]);
+
+      if (error) throw error;
+
+      toast.success("Categoría agregada exitosamente");
+      setFormData({
+        nombre: "",
+        descripcion: "",
+      });
     } catch (error) {
-      console.error("Error al agregar la categoría:", error);
+      console.error("Error:", error);
+      toast.error("Error al agregar la categoría");
+    } finally {
+      setLoading(false);
     }
-  };
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <Input
-        type="text"
-        placeholder="Nombre de la Categoría"
-        value={nombre}
-        onChange={(e) => setNombre(e.target.value)}
-        required
-        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <Input
-        type="text"
-        placeholder="Descripción"
-        value={descripcion}
-        onChange={(e) => setDescripcion(e.target.value)}
-        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <Button
-        type="submit"
-        className="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors duration-300"
-      >
-        Agregar Categoría
-      </Button>
-    </form>
+    <Card>
+      <CardHeader>
+        <CardTitle>Agregar Nueva Categoría</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid gap-2">
+            <Label htmlFor="nombre">Nombre</Label>
+            <Input
+              id="nombre"
+              value={formData.nombre}
+              onChange={(e) =>
+                setFormData({ ...formData, nombre: e.target.value })
+              }
+              required
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="descripcion">Descripción</Label>
+            <Textarea
+              id="descripcion"
+              value={formData.descripcion}
+              onChange={(e) =>
+                setFormData({ ...formData, descripcion: e.target.value })
+              }
+              required
+            />
+          </div>
+
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? "Agregando..." : "Agregar Categoría"}
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 }

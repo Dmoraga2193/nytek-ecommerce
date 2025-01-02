@@ -1,82 +1,106 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { agregarMarca } from "@/app/actions";
 import { supabase } from "@/lib/supabase";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { toast } from "sonner";
 
 export function BrandForm() {
-  const [nombre, setNombre] = useState("");
-  const [descripcion, setDescripcion] = useState("");
-  const [file, setFile] = useState<File | null>(null);
-  const [uploading, setUploading] = useState(false);
-  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    nombre: "",
+    logo: null as File | null,
+  });
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setUploading(true);
-    try {
-      let urlLogo = "";
-      if (file) {
-        const fileExt = file.name.split(".").pop();
-        const fileName = `${Math.random()}.${fileExt}`;
-        const { error } = await supabase.storage
-          .from("brand-logos")
-          .upload(fileName, file);
+    setLoading(true);
 
-        if (error) throw error;
+    try {
+      let logo_url = null;
+
+      if (formData.logo) {
+        const fileExt = formData.logo.name.split(".").pop();
+        const fileName = `${Math.random()}.${fileExt}`;
+        const filePath = `brand-logos/${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from("brand-logos")
+          .upload(filePath, formData.logo);
+
+        if (uploadError) throw uploadError;
 
         const {
           data: { publicUrl },
-        } = supabase.storage.from("brand-logos").getPublicUrl(fileName);
+        } = supabase.storage.from("brand-logos").getPublicUrl(filePath);
 
-        urlLogo = publicUrl;
+        logo_url = publicUrl;
       }
 
-      await agregarMarca({ nombre, descripcion, urlLogo });
-      setNombre("");
-      setDescripcion("");
-      setFile(null);
-      router.refresh();
+      const { error } = await supabase.from("marcas").insert([
+        {
+          nombre: formData.nombre,
+          logo_url,
+        },
+      ]);
+
+      if (error) throw error;
+
+      toast.success("Marca agregada exitosamente");
+      setFormData({
+        nombre: "",
+        logo: null,
+      });
     } catch (error) {
-      console.error("Error al agregar la marca:", error);
+      console.error("Error:", error);
+      toast.error("Error al agregar la marca");
     } finally {
-      setUploading(false);
+      setLoading(false);
     }
-  };
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <Input
-        type="text"
-        placeholder="Nombre de la Marca"
-        value={nombre}
-        onChange={(e) => setNombre(e.target.value)}
-        required
-        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <Input
-        type="text"
-        placeholder="Descripción"
-        value={descripcion}
-        onChange={(e) => setDescripcion(e.target.value)}
-        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <Input
-        type="file"
-        onChange={(e) => setFile(e.target.files?.[0] || null)}
-        accept="image/*"
-        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <Button
-        type="submit"
-        disabled={uploading}
-        className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 transition-colors duration-300"
-      >
-        {uploading ? "Subiendo..." : "Agregar Marca"}
-      </Button>
-    </form>
+    <Card>
+      <CardHeader>
+        <CardTitle>Agregar Nueva Marca</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid gap-2">
+            <Label htmlFor="nombre">Nombre</Label>
+            <Input
+              id="nombre"
+              value={formData.nombre}
+              onChange={(e) =>
+                setFormData({ ...formData, nombre: e.target.value })
+              }
+              required
+            />
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="logo">Logo</Label>
+            <Input
+              id="logo"
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                if (file) {
+                  setFormData({ ...formData, logo: file });
+                }
+              }}
+            />
+          </div>
+
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? "Agregando..." : "Agregar Marca"}
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
   );
 }

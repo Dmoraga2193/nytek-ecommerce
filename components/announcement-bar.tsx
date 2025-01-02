@@ -23,8 +23,10 @@ export default function AnnouncementBar() {
   const announcementContent = (
     <>
       <span className="inline-block px-4">
-        Oferta de Verano en Todos los Smartphones -{" "}
-        <span className="text-yellow-300 font-bold">¡50% de Descuento!</span>
+        Oferta de Verano en Todos los Productos Apple -{" "}
+        <span className="text-yellow-300 font-bold">
+          ¡Hasta un 19% de Descuento!
+        </span>
       </span>
       <Link
         href="/shop"
