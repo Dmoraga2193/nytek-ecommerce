@@ -36,7 +36,9 @@ export function ProductInfo({ product }: ProductInfoProps) {
   return (
     <div className="flex flex-col gap-6">
       <div>
-        <h1 className="text-3xl font-bold tracking-tight">{product.nombre}</h1>
+        <h1 className="text-3xl font-bold tracking-tight mb-2">
+          {product.nombre}
+        </h1>
         <p className="text-lg text-muted-foreground">
           Por {product.marca.nombre}
         </p>
