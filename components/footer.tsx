@@ -150,7 +150,7 @@ export function Footer() {
                     className={cn(
                       "relative h-8",
                       method.includes("mercadopago")
-                        ? "w-24"
+                        ? "w-32"
                         : method.includes("paypal")
                         ? "w-20"
                         : "w-12"

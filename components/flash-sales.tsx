@@ -129,7 +129,7 @@ export function FlashSales() {
     : null;
 
   return (
-    <section className="py-16 bg-gradient-to-b from-white to-gray-50">
+    <section>
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12">
           <div className="space-y-4">
