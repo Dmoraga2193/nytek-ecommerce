@@ -135,14 +135,12 @@ export function Footer() {
         {/* Bottom Section */}
         <div className="mt-12 pt-8 border-t border-gray-200">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
-            <p className="text-sm text-gray-600">
-              © {new Date().getFullYear()} Nytek. Todos los derechos reservados.
-            </p>
-            <div className="flex flex-col gap-2 md:items-end">
+            {/* Payment Methods - Now First */}
+            <div className="flex flex-col gap-2">
               <h4 className="text-sm font-semibold text-gray-900">
                 Medios de pago:
               </h4>
-              <div className="flex items-center justify-between w-full max-w-[280px]">
+              <div className="flex items-center gap-4 w-full max-w-[280px]">
                 {paymentMethods.map((method, index) => (
                   <div key={index} className="relative h-10 w-[80px]">
                     <Image
@@ -155,6 +153,10 @@ export function Footer() {
                 ))}
               </div>
             </div>
+            {/* Copyright - Now Second */}
+            <p className="text-sm text-gray-600 text-right">
+              © {new Date().getFullYear()} Nytek. Todos los derechos reservados.
+            </p>
           </div>
         </div>
       </div>
