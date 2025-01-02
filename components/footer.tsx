@@ -9,7 +9,6 @@ import {
   Phone,
   Mail,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const categories = [
   { name: "iPhone", href: "/categoria/iphone" },
@@ -28,7 +27,7 @@ const quickLinks = [
 const paymentMethods = [
   "/footer/visa.png",
   "/footer/mastercard.png",
-  "/footer/mercadopago.svg",
+  "/footer/mercadopago.png",
   "/footer/paypal.svg",
 ];
 
@@ -143,19 +142,9 @@ export function Footer() {
               <h4 className="text-sm font-semibold text-gray-900">
                 Medios de pago:
               </h4>
-              <div className="flex gap-4">
+              <div className="flex items-center justify-between w-full max-w-[280px]">
                 {paymentMethods.map((method, index) => (
-                  <div
-                    key={index}
-                    className={cn(
-                      "relative h-8",
-                      method.includes("mercadopago")
-                        ? "w-32"
-                        : method.includes("paypal")
-                        ? "w-20"
-                        : "w-12"
-                    )}
-                  >
+                  <div key={index} className="relative h-10 w-[80px]">
                     <Image
                       src={method}
                       alt="Payment method"

@@ -8,8 +8,8 @@ export function CategoriesShowcase() {
   const categories = [
     {
       id: "1",
-      nombre: "Smartphones",
-      descripcion: "Descubre los últimos modelos de smartphones",
+      nombre: "iPhone",
+      descripcion: "Descubre los últimos modelos de iPhone",
     },
     {
       id: "2",
@@ -29,7 +29,7 @@ export function CategoriesShowcase() {
   ];
 
   const categoryImages: Record<string, string> = {
-    Smartphones: "/publicidad/smartphone_banner.webp",
+    iPhone: "/publicidad/smartphone_banner.webp",
     Tablets: "/publicidad/tablets_banner.webp",
     Portátiles: "/publicidad/portatiles_banner.webp",
     Accesorios: "/publicidad/accesorios_banner.webp",
@@ -52,7 +52,7 @@ export function CategoriesShowcase() {
           {/* Banner horizontal grande */}
           <Link
             href={`/categoria/${categories[0].id}`}
-            className="group relative overflow-hidden rounded-2xl aspect-[21/9] shadow-lg hover:shadow-xl transition-all duration-300"
+            className="group relative overflow-hidden rounded-[2rem] aspect-[21/9] shadow-lg hover:shadow-xl transition-all duration-300"
           >
             <div className="absolute inset-0 transition-transform duration-300 group-hover:rotate-2 group-hover:scale-110">
               <Image
@@ -89,7 +89,7 @@ export function CategoriesShowcase() {
               <Link
                 key={category.id}
                 href={`/categoria/${category.id}`}
-                className="group relative overflow-hidden rounded-2xl aspect-[3/4] shadow-lg hover:shadow-2xl transition-all duration-300"
+                className="group relative overflow-hidden rounded-[2rem] aspect-[3/4] shadow-lg hover:shadow-2xl transition-all duration-300"
               >
                 <div className="absolute inset-0 transition-transform duration-300 group-hover:rotate-2 group-hover:scale-110">
                   <Image
