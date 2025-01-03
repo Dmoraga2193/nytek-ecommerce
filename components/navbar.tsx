@@ -28,26 +28,18 @@ const categorias = [
     subcategorias: [
       { href: "/categoria/macbooks/macbook-air", etiqueta: "MacBook Air" },
       {
-        href: "/categoria/macbooks/macbook-pro-13",
-        etiqueta: "MacBook Pro 13",
-      },
-      {
-        href: "/categoria/macbooks/macbook-pro-14",
-        etiqueta: "MacBook Pro 14",
-      },
-      {
-        href: "/categoria/macbooks/macbook-pro-16",
-        etiqueta: "MacBook Pro 16",
+        href: "/categoria/macbooks/macbook-pro",
+        etiqueta: "MacBook Pro",
       },
     ],
   },
   {
     nombre: "iPads",
     subcategorias: [
-      { href: "/categoria/ipads/ipad-pro", etiqueta: "iPad Pro" },
-      { href: "/categoria/ipads/ipad-air", etiqueta: "iPad Air" },
-      { href: "/categoria/ipads/ipad", etiqueta: "iPad" },
       { href: "/categoria/ipads/ipad-mini", etiqueta: "iPad mini" },
+      { href: "/categoria/ipads/ipad", etiqueta: "iPad" },
+      { href: "/categoria/ipads/ipad-air", etiqueta: "iPad Air" },
+      { href: "/categoria/ipads/ipad-pro", etiqueta: "iPad Pro" },
     ],
   },
   {

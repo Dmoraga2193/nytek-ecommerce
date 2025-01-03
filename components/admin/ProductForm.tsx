@@ -61,11 +61,48 @@ const macBookModels = [
 ];
 
 const iPadModels = [
-  "iPad (10.ª generación)",
-  "iPad mini (6.ª generación)",
-  "iPad Air de 13 pulgadas (M2)",
-  "iPad Pro de 11 pulgadas (M4)",
-  "iPad Pro de 13 pulgadas (M4)",
+  // iPad Pro
+  "iPad Pro de 13″ (M4)",
+  "iPad Pro de 11″ (M4)",
+  "iPad Pro de 12,9″ (6.ª generación, M2)",
+  "iPad Pro de 11″ (4.ª generación, M2)",
+  "iPad Pro de 12,9″ (5.ª generación, M1)",
+  "iPad Pro de 11″ (3.ª generación, M1)",
+  "iPad Pro de 12,9″ (4.ª generación, A12Z Bionic)",
+  "iPad Pro de 11″ (2.ª generación, A12Z Bionic)",
+  "iPad Pro de 12,9″ (3.ª generación, A12X Bionic)",
+  "iPad Pro de 11″ (1.ª generación, A12X Bionic)",
+  "iPad Pro de 12,9″ (2.ª generación, A10X Fusion)",
+  "iPad Pro de 10,5″ (A10X Fusion)",
+  "iPad Pro de 12,9″ (1.ª generación, A9X)",
+  "iPad Pro de 9,7″ (A9X)",
+  // iPad Air
+  "iPad Air de 13″ (M2)",
+  "iPad Air de 11″ (M2)",
+  "iPad Air (5.ª generación, M1)",
+  "iPad Air (4.ª generación, A14 Bionic)",
+  "iPad Air (3.ª generación, A12 Bionic)",
+  "iPad Air 2 (A8X)",
+  "iPad Air (1.ª generación, A7)",
+  // iPad
+  "iPad (10.ª generación, A14 Bionic)",
+  "iPad (9.ª generación, A13 Bionic)",
+  "iPad (8.ª generación, A12 Bionic)",
+  "iPad (7.ª generación, A10 Fusion)",
+  "iPad (6.ª generación, A10 Fusion)",
+  "iPad (5.ª generación, A9)",
+  "iPad (4.ª generación, A6X)",
+  "iPad (3.ª generación, A5X)",
+  "iPad 2 (A5)",
+  "iPad (1.ª generación, A4)",
+  // iPad mini
+  "iPad mini (6.ª generación, A15 Bionic)",
+  "iPad mini (A17 Pro)",
+  "iPad mini (5.ª generación, A12 Bionic)",
+  "iPad mini 4 (A8)",
+  "iPad mini 3 (A7)",
+  "iPad mini 2 (A7)",
+  "iPad mini (1.ª generación, A5)",
 ];
 
 const iPhoneColors = [
