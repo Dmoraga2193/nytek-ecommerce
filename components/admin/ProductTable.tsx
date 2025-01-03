@@ -34,6 +34,9 @@ interface Product {
   categoria_id: string;
   marca_id: string;
   imagenes: string[];
+  modelo: string;
+  color: string;
+  capacidad: string;
 }
 
 export function ProductTable() {
@@ -114,19 +117,22 @@ export function ProductTable() {
                 <TableHead className="text-right">Precio</TableHead>
                 <TableHead className="text-center">Stock</TableHead>
                 <TableHead className="text-center">Oferta</TableHead>
+                <TableHead>Modelo</TableHead>
+                <TableHead>Color</TableHead>
+                <TableHead>Capacidad</TableHead>
                 <TableHead className="text-right">Acciones</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {loading ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center">
+                  <TableCell colSpan={9} className="text-center">
                     Cargando productos...
                   </TableCell>
                 </TableRow>
               ) : filteredProducts.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={6} className="text-center">
+                  <TableCell colSpan={9} className="text-center">
                     No se encontraron productos
                   </TableCell>
                 </TableRow>
@@ -164,6 +170,9 @@ export function ProductTable() {
                           <Badge variant="secondary">Sin oferta</Badge>
                         )}
                       </TableCell>
+                      <TableCell>{product.modelo}</TableCell>
+                      <TableCell>{product.color}</TableCell>
+                      <TableCell>{product.capacidad}</TableCell>
                       <TableCell className="text-right">
                         <div className="flex justify-end gap-2">
                           <Button

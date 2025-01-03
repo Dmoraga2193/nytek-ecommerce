@@ -27,6 +27,72 @@ interface Marca {
   nombre: string;
 }
 
+const iPhoneModels = [
+  "iPhone 13",
+  "iPhone 13 mini",
+  "iPhone 13 Pro",
+  "iPhone 13 Pro Max",
+  "iPhone 14",
+  "iPhone 14 Plus",
+  "iPhone 14 Pro",
+  "iPhone 14 Pro Max",
+  "iPhone 15",
+  "iPhone 15 Plus",
+  "iPhone 15 Pro",
+  "iPhone 15 Pro Max",
+  "iPhone 16",
+  "iPhone 16 Plus",
+  "iPhone 16 Pro",
+  "iPhone 16 Pro Max",
+];
+
+const macBookModels = [
+  "MacBook Air de 13 pulgadas (M1)",
+  "MacBook Pro de 13 pulgadas (M1)",
+  "MacBook Air de 13 pulgadas (M2)",
+  "MacBook Pro de 13 pulgadas (M2)",
+  "MacBook Pro de 14 pulgadas (M2 Pro y M2 Max)",
+  "MacBook Pro de 16 pulgadas (M2 Pro y M2 Max)",
+  "MacBook Air de 13 pulgadas (M3)",
+  "MacBook Air de 15 pulgadas (M3)",
+  "MacBook Pro de 13 pulgadas (M3)",
+  "MacBook Pro de 14 pulgadas (M3 Pro y M3 Max)",
+  "MacBook Pro de 16 pulgadas (M3 Pro y M3 Max)",
+];
+
+const iPadModels = [
+  "iPad (10.ª generación)",
+  "iPad mini (6.ª generación)",
+  "iPad Air de 13 pulgadas (M2)",
+  "iPad Pro de 11 pulgadas (M4)",
+  "iPad Pro de 13 pulgadas (M4)",
+];
+
+const iPhoneColors = [
+  "Blanco",
+  "Negro",
+  "Azul ultramar",
+  "Verde azulado",
+  "Rosa",
+  "Titanio negro",
+  "Titanio blanco",
+  "Titanio natural",
+  "Titanio desierto",
+];
+
+const macBookColors = ["Gris espacial", "Plata"];
+
+const iPadColors = [
+  "Azul",
+  "Púrpura",
+  "Blanco estrella",
+  "Rosa",
+  "Plata",
+  "Amarillo",
+];
+
+const capacities = ["64GB", "128GB", "256GB", "512GB", "1TB"];
+
 export function ProductForm() {
   const [loading, setLoading] = useState(false);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
@@ -40,12 +106,44 @@ export function ProductForm() {
     categoria_id: "",
     marca_id: "",
     imagenes: [] as File[],
+    modelo: "",
+    color: "",
+    capacidad: "",
   });
+
+  const [availableModels, setAvailableModels] = useState<string[]>([]);
+  const [availableColors, setAvailableColors] = useState<string[]>([]);
 
   useEffect(() => {
     fetchCategorias();
     fetchMarcas();
   }, []);
+
+  useEffect(() => {
+    // Update available models and colors based on selected category
+    const selectedCategory = categorias.find(
+      (cat) => cat.id === formData.categoria_id
+    );
+    if (selectedCategory) {
+      switch (selectedCategory.nombre) {
+        case "iPhone":
+          setAvailableModels(iPhoneModels);
+          setAvailableColors(iPhoneColors);
+          break;
+        case "MacBook":
+          setAvailableModels(macBookModels);
+          setAvailableColors(macBookColors);
+          break;
+        case "iPad":
+          setAvailableModels(iPadModels);
+          setAvailableColors(iPadColors);
+          break;
+        default:
+          setAvailableModels([]);
+          setAvailableColors([]);
+      }
+    }
+  }, [formData.categoria_id, categorias]);
 
   async function fetchCategorias() {
     try {
@@ -82,29 +180,24 @@ export function ProductForm() {
     setLoading(true);
 
     try {
-      // Validar que los campos requeridos estén presentes
       if (!formData.categoria_id || !formData.marca_id) {
         throw new Error("Debes seleccionar una categoría y una marca");
       }
 
-      // Validar que los precios sean números válidos
       const precio = parseFloat(formData.precio);
       const precioOriginal = parseFloat(formData.precio_original);
       if (isNaN(precio) || isNaN(precioOriginal)) {
         throw new Error("Los precios deben ser números válidos");
       }
 
-      // Validar que el stock sea un número válido
       const cantidadStock = parseInt(formData.cantidad_stock);
       if (isNaN(cantidadStock)) {
         throw new Error("El stock debe ser un número válido");
       }
 
-      // Calcular el porcentaje de descuento
       const porcentajeDescuento =
         ((precioOriginal - precio) / precioOriginal) * 100;
 
-      // Subir imágenes
       const imageUrls = [];
       for (const imagen of formData.imagenes) {
         const fileExt = imagen.name.split(".").pop();
@@ -112,7 +205,6 @@ export function ProductForm() {
           .toString(36)
           .substring(2)}.${fileExt}`;
 
-        // Modificado: ya no incluye subcarpeta
         const { error: uploadError } = await supabase.storage
           .from("product-images")
           .upload(fileName, imagen);
@@ -129,7 +221,6 @@ export function ProductForm() {
         imageUrls.push(publicUrl);
       }
 
-      // Crear producto
       const { error: insertError } = await supabase.from("productos").insert([
         {
           nombre: formData.nombre,
@@ -146,6 +237,9 @@ export function ProductForm() {
           en_oferta_flash: false,
           creado_en: new Date().toISOString(),
           actualizado_en: new Date().toISOString(),
+          modelo: formData.modelo,
+          color: formData.color,
+          capacidad: formData.capacidad,
         },
       ]);
 
@@ -164,6 +258,9 @@ export function ProductForm() {
         categoria_id: "",
         marca_id: "",
         imagenes: [],
+        modelo: "",
+        color: "",
+        capacidad: "",
       });
     } catch (error) {
       console.error("Error detallado:", error);
@@ -316,6 +413,72 @@ export function ProductForm() {
                 </SelectContent>
               </Select>
             </div>
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="modelo">Modelo</Label>
+            <Select
+              value={formData.modelo}
+              onValueChange={(value) =>
+                setFormData({ ...formData, modelo: value })
+              }
+              required
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccionar modelo" />
+              </SelectTrigger>
+              <SelectContent>
+                {availableModels.map((model) => (
+                  <SelectItem key={model} value={model}>
+                    {model}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="color">Color</Label>
+            <Select
+              value={formData.color}
+              onValueChange={(value) =>
+                setFormData({ ...formData, color: value })
+              }
+              required
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccionar color" />
+              </SelectTrigger>
+              <SelectContent>
+                {availableColors.map((color) => (
+                  <SelectItem key={color} value={color}>
+                    {color}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="capacidad">Capacidad</Label>
+            <Select
+              value={formData.capacidad}
+              onValueChange={(value) =>
+                setFormData({ ...formData, capacidad: value })
+              }
+              required
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccionar capacidad" />
+              </SelectTrigger>
+              <SelectContent>
+                {capacities.map((capacity) => (
+                  <SelectItem key={capacity} value={capacity}>
+                    {capacity}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="grid gap-2">

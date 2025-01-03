@@ -35,6 +35,9 @@ interface Product {
   categoria_id: string;
   marca_id: string;
   imagenes: string[];
+  modelo: string;
+  color: string;
+  capacidad: string;
 }
 
 interface EditProductFormProps {
@@ -42,6 +45,72 @@ interface EditProductFormProps {
   onClose: () => void;
   onProductUpdated: () => void;
 }
+
+const iPhoneModels = [
+  "iPhone 13",
+  "iPhone 13 mini",
+  "iPhone 13 Pro",
+  "iPhone 13 Pro Max",
+  "iPhone 14",
+  "iPhone 14 Plus",
+  "iPhone 14 Pro",
+  "iPhone 14 Pro Max",
+  "iPhone 15",
+  "iPhone 15 Plus",
+  "iPhone 15 Pro",
+  "iPhone 15 Pro Max",
+  "iPhone 16",
+  "iPhone 16 Plus",
+  "iPhone 16 Pro",
+  "iPhone 16 Pro Max",
+];
+
+const macBookModels = [
+  "MacBook Air de 13 pulgadas (M1)",
+  "MacBook Pro de 13 pulgadas (M1)",
+  "MacBook Air de 13 pulgadas (M2)",
+  "MacBook Pro de 13 pulgadas (M2)",
+  "MacBook Pro de 14 pulgadas (M2 Pro y M2 Max)",
+  "MacBook Pro de 16 pulgadas (M2 Pro y M2 Max)",
+  "MacBook Air de 13 pulgadas (M3)",
+  "MacBook Air de 15 pulgadas (M3)",
+  "MacBook Pro de 13 pulgadas (M3)",
+  "MacBook Pro de 14 pulgadas (M3 Pro y M3 Max)",
+  "MacBook Pro de 16 pulgadas (M3 Pro y M3 Max)",
+];
+
+const iPadModels = [
+  "iPad (10.ª generación)",
+  "iPad mini (6.ª generación)",
+  "iPad Air de 13 pulgadas (M2)",
+  "iPad Pro de 11 pulgadas (M4)",
+  "iPad Pro de 13 pulgadas (M4)",
+];
+
+const iPhoneColors = [
+  "Blanco",
+  "Negro",
+  "Azul ultramar",
+  "Verde azulado",
+  "Rosa",
+  "Titanio negro",
+  "Titanio blanco",
+  "Titanio natural",
+  "Titanio desierto",
+];
+
+const macBookColors = ["Gris espacial", "Plata"];
+
+const iPadColors = [
+  "Azul",
+  "Púrpura",
+  "Blanco estrella",
+  "Rosa",
+  "Plata",
+  "Amarillo",
+];
+
+const capacities = ["64GB", "128GB", "256GB", "512GB", "1TB"];
 
 export function EditProductForm({
   product,
@@ -52,11 +121,39 @@ export function EditProductForm({
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [marcas, setMarcas] = useState<Marca[]>([]);
   const [formData, setFormData] = useState<Product>(product);
+  const [availableModels, setAvailableModels] = useState<string[]>([]);
+  const [availableColors, setAvailableColors] = useState<string[]>([]);
 
   useEffect(() => {
     fetchCategorias();
     fetchMarcas();
   }, []);
+
+  useEffect(() => {
+    // Update available models and colors based on selected category
+    const selectedCategory = categorias.find(
+      (cat) => cat.id === formData.categoria_id
+    );
+    if (selectedCategory) {
+      switch (selectedCategory.nombre) {
+        case "iPhone":
+          setAvailableModels(iPhoneModels);
+          setAvailableColors(iPhoneColors);
+          break;
+        case "MacBook":
+          setAvailableModels(macBookModels);
+          setAvailableColors(macBookColors);
+          break;
+        case "iPad":
+          setAvailableModels(iPadModels);
+          setAvailableColors(iPadColors);
+          break;
+        default:
+          setAvailableModels([]);
+          setAvailableColors([]);
+      }
+    }
+  }, [formData.categoria_id, categorias]);
 
   async function fetchCategorias() {
     try {
@@ -103,6 +200,9 @@ export function EditProductForm({
           cantidad_stock: formData.cantidad_stock,
           categoria_id: formData.categoria_id,
           marca_id: formData.marca_id,
+          modelo: formData.modelo,
+          color: formData.color,
+          capacidad: formData.capacidad,
           actualizado_en: new Date().toISOString(),
         })
         .eq("id", product.id);
@@ -235,6 +335,68 @@ export function EditProductForm({
             </SelectContent>
           </Select>
         </div>
+      </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor="modelo">Modelo</Label>
+        <Select
+          value={formData.modelo}
+          onValueChange={(value) => setFormData({ ...formData, modelo: value })}
+          required
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Seleccionar modelo" />
+          </SelectTrigger>
+          <SelectContent>
+            {availableModels.map((model) => (
+              <SelectItem key={model} value={model}>
+                {model}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor="color">Color</Label>
+        <Select
+          value={formData.color}
+          onValueChange={(value) => setFormData({ ...formData, color: value })}
+          required
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Seleccionar color" />
+          </SelectTrigger>
+          <SelectContent>
+            {availableColors.map((color) => (
+              <SelectItem key={color} value={color}>
+                {color}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="grid gap-2">
+        <Label htmlFor="capacidad">Capacidad</Label>
+        <Select
+          value={formData.capacidad}
+          onValueChange={(value) =>
+            setFormData({ ...formData, capacidad: value })
+          }
+          required
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Seleccionar capacidad" />
+          </SelectTrigger>
+          <SelectContent>
+            {capacities.map((capacity) => (
+              <SelectItem key={capacity} value={capacity}>
+                {capacity}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="flex justify-end gap-2">
