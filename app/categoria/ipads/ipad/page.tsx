@@ -21,7 +21,18 @@ async function getProducts(searchParams: Awaited<PageProps["searchParams"]>) {
     let query = supabase
       .from("productos")
       .select("*", { count: "exact" })
-      .eq("modelo", "iPad (10.ª generación)");
+      .in("modelo", [
+        "iPad (10.ª generación, A14 Bionic)",
+        "iPad (9.ª generación, A13 Bionic)",
+        "iPad (8.ª generación, A12 Bionic)",
+        "iPad (7.ª generación, A10 Fusion)",
+        "iPad (6.ª generación, A10 Fusion)",
+        "iPad (5.ª generación, A9)",
+        "iPad (4.ª generación, A6X)",
+        "iPad (3.ª generación, A5X)",
+        "iPad 2 (A5)",
+        "iPad (1.ª generación, A4)",
+      ]);
 
     if (searchParams.color) {
       query = query.eq("color", searchParams.color);

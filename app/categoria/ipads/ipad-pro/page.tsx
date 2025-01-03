@@ -22,8 +22,20 @@ async function getProducts(searchParams: Awaited<PageProps["searchParams"]>) {
       .from("productos")
       .select("*", { count: "exact" })
       .in("modelo", [
-        "iPad Pro de 11 pulgadas (M4)",
-        "iPad Pro de 13 pulgadas (M4)",
+        "iPad Pro de 13″ (M4)",
+        "iPad Pro de 11″ (M4)",
+        "iPad Pro de 12,9″ (6.ª generación, M2)",
+        "iPad Pro de 11″ (4.ª generación, M2)",
+        "iPad Pro de 12,9″ (5.ª generación, M1)",
+        "iPad Pro de 11″ (3.ª generación, M1)",
+        "iPad Pro de 12,9″ (4.ª generación, A12Z Bionic)",
+        "iPad Pro de 11″ (2.ª generación, A12Z Bionic)",
+        "iPad Pro de 12,9″ (3.ª generación, A12X Bionic)",
+        "iPad Pro de 11″ (1.ª generación, A12X Bionic)",
+        "iPad Pro de 12,9″ (2.ª generación, A10X Fusion)",
+        "iPad Pro de 10,5″ (A10X Fusion)",
+        "iPad Pro de 12,9″ (1.ª generación, A9X)",
+        "iPad Pro de 9,7″ (A9X)",
       ]);
 
     if (searchParams.color) {

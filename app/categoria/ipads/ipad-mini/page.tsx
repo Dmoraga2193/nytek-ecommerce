@@ -21,7 +21,15 @@ async function getProducts(searchParams: Awaited<PageProps["searchParams"]>) {
     let query = supabase
       .from("productos")
       .select("*", { count: "exact" })
-      .eq("modelo", "iPad mini (6.ª generación)");
+      .in("modelo", [
+        "iPad mini (6.ª generación, A15 Bionic)",
+        "iPad mini (A17 Pro)",
+        "iPad mini (5.ª generación, A12 Bionic)",
+        "iPad mini 4 (A8)",
+        "iPad mini 3 (A7)",
+        "iPad mini 2 (A7)",
+        "iPad mini (1.ª generación, A5)",
+      ]);
 
     if (searchParams.color) {
       query = query.eq("color", searchParams.color);

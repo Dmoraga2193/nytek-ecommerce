@@ -21,7 +21,12 @@ async function getProducts(searchParams: Awaited<PageProps["searchParams"]>) {
     let query = supabase
       .from("productos")
       .select("*", { count: "exact" })
-      .eq("modelo", "iPhone 15");
+      .in("modelo", [
+        "iPhone 15",
+        "iPhone 15 Plus",
+        "iPhone 15 Pro",
+        "iPhone 15 Pro Max",
+      ]);
 
     if (searchParams.color) {
       query = query.eq("color", searchParams.color);

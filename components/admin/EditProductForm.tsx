@@ -145,6 +145,7 @@ const iPadColors = [
   "Rosa",
   "Plata",
   "Amarillo",
+  "Gris espacial",
 ];
 
 const capacities = ["64GB", "128GB", "256GB", "512GB", "1TB"];
