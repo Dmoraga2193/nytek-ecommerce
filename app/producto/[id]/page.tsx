@@ -11,30 +11,10 @@ interface PageProps {
   }>;
 }
 
-function getModelPath(categoryName: string, modelo: string): string {
-  const category = categoryName.toLowerCase();
-
-  if (modelo.toLowerCase().includes("macbook")) {
-    return `${category}s/${
-      modelo.toLowerCase().includes("macbook air")
-        ? "macbook-air"
-        : "macbook-pro"
-    }`;
-  }
-
-  if (modelo.toLowerCase().includes("iphone")) {
-    return `${category}/iphone-${modelo.split(" ")[1].toLowerCase()}`;
-  }
-
-  return `${category}/${modelo.toLowerCase().replace(/ /g, "-")}`;
-}
-
-function getModelName(modelo: string): string {
-  if (modelo.toLowerCase().includes("macbook air")) return "MacBook Air";
-  if (modelo.toLowerCase().includes("macbook pro")) return "MacBook Pro";
-  if (modelo.toLowerCase().includes("iphone")) {
-    return `iPhone ${modelo.split(" ")[1]}`;
-  }
+function getMainCategory(modelo: string): string {
+  if (modelo.toLowerCase().includes("iphone")) return "iPhone";
+  if (modelo.toLowerCase().includes("ipad")) return "iPad";
+  if (modelo.toLowerCase().includes("macbook")) return "MacBook";
   return modelo;
 }
 
@@ -62,31 +42,17 @@ export default async function ProductPage({ params }: PageProps) {
             Inicio
           </Link>
           <ChevronRight className="h-4 w-4" />
-          {product.categoria?.nombre && (
-            <>
-              <Link
-                href={`/categoria/${product.categoria.nombre.toLowerCase()}`}
-                className="hover:text-foreground"
-              >
-                {product.categoria.nombre}
-              </Link>
-              <ChevronRight className="h-4 w-4" />
-              {product.modelo && (
-                <>
-                  <Link
-                    href={`/categoria/${getModelPath(
-                      product.categoria.nombre,
-                      product.modelo
-                    )}`}
-                    className="hover:text-foreground"
-                  >
-                    {getModelName(product.modelo)}
-                  </Link>
-                  <ChevronRight className="h-4 w-4" />
-                </>
-              )}
-            </>
-          )}
+          <Link
+            href={`/categoria/${
+              product.categoria.nombre.toLowerCase() === "iphone"
+                ? "iphone"
+                : `${product.categoria.nombre.toLowerCase()}s`
+            }`}
+            className="hover:text-foreground"
+          >
+            {getMainCategory(product.modelo)}
+          </Link>
+          <ChevronRight className="h-4 w-4" />
           <span className="text-foreground">{product.nombre}</span>
         </nav>
 

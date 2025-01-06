@@ -7,22 +7,22 @@ import { cn } from "@/lib/utils";
 export function CategoriesShowcase() {
   const categories = [
     {
-      id: "1",
+      id: "iphone",
       nombre: "iPhone",
       descripcion: "Descubre los últimos modelos de iPhone",
     },
     {
-      id: "2",
-      nombre: "Tablets",
-      descripcion: "Encuentra la tablet perfecta para tu estilo de vida",
+      id: "ipads",
+      nombre: "iPads",
+      descripcion: "Encuentra tu iPad perfecto para tu estilo de vida",
     },
     {
-      id: "3",
-      nombre: "Portátiles",
-      descripcion: "Potencia y portabilidad en nuestros portátiles",
+      id: "macbooks",
+      nombre: "MacBooks",
+      descripcion: "Potencia y portabilidad en nuestros MacBooks",
     },
     {
-      id: "4",
+      id: "accesorios",
       nombre: "Accesorios",
       descripcion: "Complementa tus dispositivos con nuestros accesorios",
     },
@@ -30,8 +30,8 @@ export function CategoriesShowcase() {
 
   const categoryImages: Record<string, string> = {
     iPhone: "/publicidad/smartphone_banner.webp",
-    Tablets: "/publicidad/tablets_banner.webp",
-    Portátiles: "/publicidad/portatiles_banner.webp",
+    iPads: "/publicidad/tablets_banner.webp",
+    MacBooks: "/publicidad/portatiles_banner.webp",
     Accesorios: "/publicidad/accesorios_banner.webp",
   };
 
