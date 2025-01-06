@@ -78,7 +78,7 @@ export function EnhancedSearchbar() {
   };
 
   return (
-    <div className="relative flex-1 max-w-md group">
+    <div className="relative flex-1 w-full max-w-md group">
       <div className="relative">
         <Input
           type="search"
@@ -87,7 +87,7 @@ export function EnhancedSearchbar() {
           onChange={handleInputChange}
           onFocus={handleInputFocus}
           onBlur={handleInputBlur}
-          className="w-full pl-10 pr-10 py-2 bg-white border-2 border-gray-200 text-gray-800 rounded-full shadow-sm transition-all duration-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:outline-none"
+          className="w-full pl-10 pr-10 py-2 bg-white border-2 border-gray-200 text-gray-800 rounded-full shadow-sm transition-all duration-300 focus:border-primary focus:ring-2 focus:ring-primary focus:ring-opacity-50 focus:outline-none text-sm sm:text-base"
         />
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-primary transition-colors duration-300" />
         <Button
@@ -101,7 +101,7 @@ export function EnhancedSearchbar() {
         </Button>
       </div>
       {showResults && searchTerm && (
-        <ul className="absolute top-full left-0 w-full bg-white border border-gray-200 rounded-lg shadow-lg z-10 max-h-80 overflow-y-auto mt-2 transition-all duration-300 opacity-0 translate-y-2 group-focus-within:opacity-100 group-focus-within:translate-y-0">
+        <ul className="fixed sm:absolute top-[60px] sm:top-full left-0 w-full sm:w-auto sm:min-w-full bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-[calc(100vh-120px)] sm:max-h-80 overflow-y-auto mt-2 transition-all duration-300 opacity-0 translate-y-2 group-focus-within:opacity-100 group-focus-within:translate-y-0">
           {searchResults.length > 0 ? (
             searchResults.map((product) => {
               const discount = calculateDiscount(
@@ -115,9 +115,9 @@ export function EnhancedSearchbar() {
                 >
                   <Link
                     href={`/producto/${product.id}`}
-                    className="flex items-center gap-4 px-4 py-3"
+                    className="flex items-center gap-2 sm:gap-4 px-2 sm:px-4 py-2 sm:py-3"
                   >
-                    <div className="relative h-12 w-12 rounded-md overflow-hidden">
+                    <div className="relative h-10 w-10 sm:h-12 sm:w-12 rounded-md overflow-hidden flex-shrink-0">
                       <Image
                         src={product.imagenes[0] || "/placeholder.svg"}
                         alt={product.nombre}
@@ -127,7 +127,7 @@ export function EnhancedSearchbar() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2">
-                        <p className="font-medium text-gray-800 truncate">
+                        <p className="font-medium text-gray-800 truncate text-sm sm:text-base">
                           {product.nombre}
                         </p>
                         {discount > 0 && (
@@ -136,7 +136,7 @@ export function EnhancedSearchbar() {
                           </span>
                         )}
                       </div>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-xs sm:text-sm text-gray-500">
                         {formatPrice(product.precio)}
                       </p>
                     </div>

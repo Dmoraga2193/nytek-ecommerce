@@ -19,9 +19,7 @@ const categories = [
 
 const quickLinks = [
   { name: "Sobre Nosotros", href: "/about" },
-  { name: "Contacto", href: "/contact" },
-  { name: "Blog", href: "/blog" },
-  { name: "FAQs", href: "/faqs" },
+  { name: "Contacto", href: "/contacto" },
 ];
 
 const paymentMethods = [
@@ -118,7 +116,7 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <MapPin className="h-4 w-4" />
-                <span>Av. Principal 123, Santiago, Chile</span>
+                <span>Radal #1015 Quinta Normal, Santiago, Chile</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-gray-600">
                 <Phone className="h-4 w-4" />

@@ -9,14 +9,7 @@ export const metadata: Metadata = {
 
 export default function iPhonePage() {
   return (
-    <div className="container mx-auto px-4 py-16">
-      <h1 className="text-4xl font-bold mb-8">iPhone</h1>
-      <p className="text-xl text-gray-600 mb-12">
-        Descubre la innovación y el diseño excepcional de nuestros iPhones.
-        Desde cámaras avanzadas hasta rendimiento potente, hay un iPhone para
-        cada necesidad.
-      </p>
-
+    <div className="container mx-auto px-4 py-16 mt-16">
       <div className="space-y-12">
         <CategoryBanner
           title="iPhone 16"

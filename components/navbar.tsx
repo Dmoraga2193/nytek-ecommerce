@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ShoppingCart, Heart, ChevronDown } from "lucide-react";
+import { useState, useEffect } from "react";
+import { ShoppingCart, Heart, ChevronDown, Menu, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -12,6 +12,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { EnhancedSearchbar } from "./enhanced-searchbar";
+import { cn } from "@/lib/utils";
 
 const categorias = [
   {
@@ -62,6 +63,7 @@ const categorias = [
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,13 +81,18 @@ export default function Navbar() {
     };
   }, []);
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
   return (
     <nav
-      className={`w-[100vw] bg-white text-black py-4 fixed top-[32px] left-0 z-40 border-b transition-all duration-300 ${
+      className={cn(
+        "w-full bg-white text-black py-4 fixed top-[32px] left-0 z-40 border-b transition-all duration-300",
         isScrolled ? "rounded-b-[4rem]" : ""
-      }`}
+      )}
     >
-      <div className="container mx-auto px-4 flex items-center justify-between gap-8">
+      <div className="container mx-auto px-4 flex items-center justify-between gap-4">
         {/* Logo y Título */}
         <Link href="/" className="flex items-center gap-2">
           <Image
@@ -97,7 +104,21 @@ export default function Navbar() {
           <Image src="/logo.png" alt="Nytek Logo" width={120} height={120} />
         </Link>
 
-        {/* Enlaces de Navegación */}
+        {/* Mobile Menu Button */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          onClick={toggleMobileMenu}
+        >
+          {isMobileMenuOpen ? (
+            <X className="h-6 w-6" />
+          ) : (
+            <Menu className="h-6 w-6" />
+          )}
+        </Button>
+
+        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-8">
           {categorias.map((categoria) => (
             <DropdownMenu key={categoria.nombre}>
@@ -118,12 +139,12 @@ export default function Navbar() {
         </div>
 
         {/* Barra de Búsqueda */}
-        <div className="flex-1 max-w-md">
+        <div className="hidden md:block flex-1 max-w-md">
           <EnhancedSearchbar />
         </div>
 
         {/* Iconos */}
-        <div className="flex items-center gap-4">
+        <div className="hidden md:flex items-center gap-4">
           <Button variant="ghost" size="icon" className="relative">
             <Heart className="h-6 w-6" />
             <span className="sr-only">Lista de deseos</span>
@@ -132,6 +153,61 @@ export default function Navbar() {
             <ShoppingCart className="h-6 w-6" />
             <span className="sr-only">Carrito de compras</span>
           </Button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={cn(
+          "fixed inset-0 bg-white z-50 transition-transform duration-300 ease-in-out transform",
+          isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        )}
+      >
+        <div className="container mx-auto px-4 py-6">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="absolute top-4 right-4"
+            onClick={toggleMobileMenu}
+          >
+            <X className="h-6 w-6" />
+          </Button>
+
+          <div className="mt-12 space-y-6">
+            {categorias.map((categoria) => (
+              <div key={categoria.nombre} className="space-y-2">
+                <h3 className="text-lg font-semibold">{categoria.nombre}</h3>
+                <ul className="space-y-2">
+                  {categoria.subcategorias.map((subcategoria) => (
+                    <li key={subcategoria.etiqueta}>
+                      <Link
+                        href={subcategoria.href}
+                        className="text-gray-600 hover:text-gray-900"
+                        onClick={toggleMobileMenu}
+                      >
+                        {subcategoria.etiqueta}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8">
+            <EnhancedSearchbar />
+          </div>
+
+          <div className="mt-8 flex justify-center gap-4">
+            <Button variant="ghost" size="icon" className="relative">
+              <Heart className="h-6 w-6" />
+              <span className="sr-only">Lista de deseos</span>
+            </Button>
+            <Button variant="ghost" size="icon" className="relative">
+              <ShoppingCart className="h-6 w-6" />
+              <span className="sr-only">Carrito de compras</span>
+            </Button>
+          </div>
         </div>
       </div>
     </nav>

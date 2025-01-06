@@ -36,7 +36,7 @@ export function CategoriesShowcase() {
   };
 
   return (
-    <section className="py-24">
+    <section className="py-24" id="categoria">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-5xl font-bold tracking-tight mb-6 pb-2 leading-tight bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600">

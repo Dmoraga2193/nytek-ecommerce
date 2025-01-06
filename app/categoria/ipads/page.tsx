@@ -9,18 +9,11 @@ export const metadata: Metadata = {
 
 export default function iPadPage() {
   return (
-    <div className="container mx-auto px-4 py-16">
-      <h1 className="text-4xl font-bold mb-8">iPad</h1>
-      <p className="text-xl text-gray-600 mb-12">
-        Descubre la versatilidad y potencia de nuestros iPads. Ya sea para
-        trabajo, estudio o entretenimiento, hay un iPad perfecto para cada
-        tarea.
-      </p>
-
+    <div className="container mx-auto px-4 py-16 mt-16">
       <div className="space-y-12">
         <CategoryBanner
           title="iPad Pro"
-          description="El iPad más potente, con chip M2 y pantalla Liquid Retina XDR. Perfecto para profesionales creativos."
+          description="El iPad más potente, con chip M4 y pantalla Liquid Retina XDR. Perfecto para profesionales creativos."
           imageSrc="/publicidad/categorias/ipad_pro_banner.webp"
           href="/categoria/ipads/ipad-pro"
         />

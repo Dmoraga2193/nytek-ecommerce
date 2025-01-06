@@ -9,8 +9,8 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Nytek - E-commerce Store",
-  description: "Your one-stop shop for all your needs",
+  title: "Nytek",
+  description: "Tu tienda de confianza para productos Apple en Santiago, Chile",
 };
 
 export default function RootLayout({

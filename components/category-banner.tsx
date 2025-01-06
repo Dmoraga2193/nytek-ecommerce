@@ -20,7 +20,7 @@ export function CategoryBanner({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-3xl shadow-lg",
+        "relative overflow-hidden rounded-[4rem] shadow-lg",
         "transition-transform duration-300 hover:scale-[1.02]",
         "group cursor-pointer"
       )}
