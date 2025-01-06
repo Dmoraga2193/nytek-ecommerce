@@ -193,15 +193,6 @@ export function FlashSales() {
                         discount={discount}
                         rating={rating}
                         reviews={reviews}
-                        onAddToCart={() =>
-                          console.log("Add to cart:", producto.id)
-                        }
-                        onToggleWishlist={() =>
-                          console.log("Toggle wishlist:", producto.id)
-                        }
-                        onQuickView={() =>
-                          console.log("Quick view:", producto.id)
-                        }
                       />
                     </div>
                   </CarouselItem>

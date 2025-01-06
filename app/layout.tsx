@@ -6,6 +6,7 @@ import Navbar from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { CartProvider } from "@/contexts/CartContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,14 +21,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <body className={inter.className}>
         <AuthProvider>
-          <AnnouncementBar />
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-          <Toaster />
+          <CartProvider>
+            <AnnouncementBar />
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+            <Toaster />
+          </CartProvider>
         </AuthProvider>
       </body>
     </html>

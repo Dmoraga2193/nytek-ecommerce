@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ShoppingCart, Heart, ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,7 @@ import { EnhancedSearchbar } from "./enhanced-searchbar";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import { UserMenu } from "./UserMenu";
+import { CartIcon } from "./CartIcon";
 
 const categorias = [
   {
@@ -31,16 +32,8 @@ const categorias = [
     subcategorias: [
       { href: "/categoria/macbooks/macbook-air", etiqueta: "MacBook Air" },
       {
-        href: "/categoria/macbooks/macbook-pro-13",
-        etiqueta: "MacBook Pro 13",
-      },
-      {
-        href: "/categoria/macbooks/macbook-pro-14",
-        etiqueta: "MacBook Pro 14",
-      },
-      {
-        href: "/categoria/macbooks/macbook-pro-16",
-        etiqueta: "MacBook Pro 16",
+        href: "/categoria/macbooks/macbook-pro",
+        etiqueta: "MacBook Pro",
       },
     ],
   },
@@ -148,14 +141,7 @@ export default function Navbar() {
 
         {/* Iconos */}
         <div className="hidden md:flex items-center gap-4">
-          <Button variant="ghost" size="icon" className="relative">
-            <Heart className="h-6 w-6" />
-            <span className="sr-only">Lista de deseos</span>
-          </Button>
-          <Button variant="ghost" size="icon" className="relative">
-            <ShoppingCart className="h-6 w-6" />
-            <span className="sr-only">Carrito de compras</span>
-          </Button>
+          <CartIcon />
           {user ? (
             <UserMenu />
           ) : (
@@ -214,24 +200,12 @@ export default function Navbar() {
           </div>
 
           <div className="mt-8 flex flex-col gap-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative self-center"
-            >
-              <Heart className="h-6 w-6" />
-              <span className="sr-only">Lista de deseos</span>
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="relative self-center"
-            >
-              <ShoppingCart className="h-6 w-6" />
-              <span className="sr-only">Carrito de compras</span>
-            </Button>
+            <CartIcon />
             {user ? (
-              <UserMenu />
+              <div className="flex flex-col items-center gap-2">
+                <p className="text-sm font-medium">{user.email}</p>
+                <UserMenu />
+              </div>
             ) : (
               <div className="flex flex-col gap-2">
                 <Button variant="outline" asChild onClick={toggleMobileMenu}>

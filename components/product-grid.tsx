@@ -46,9 +46,6 @@ export function ProductGrid({ products }: ProductGridProps) {
           )}
           rating={product.calificacion}
           reviews={product.cantidad_resenas}
-          onAddToCart={() => console.log("Add to cart:", product.id)}
-          onToggleWishlist={() => console.log("Toggle wishlist:", product.id)}
-          onQuickView={() => console.log("Quick view:", product.id)}
         />
       ))}
     </div>

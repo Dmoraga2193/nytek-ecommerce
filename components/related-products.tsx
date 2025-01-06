@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { ProductCard } from "./product-card";
-import { toast } from "sonner";
 import { formatPrice } from "@/lib/utils";
 
 interface Product {
@@ -47,18 +46,6 @@ export function RelatedProducts({
     getRelatedProducts();
   }, [categoryId, currentProductId]);
 
-  const handleAddToCart = (productId: string) => {
-    toast.success(`Producto ${productId} agregado al carrito`);
-  };
-
-  const handleToggleWishlist = (productId: string) => {
-    toast.success(`Producto ${productId} agregado a la lista de deseos`);
-  };
-
-  const handleQuickView = (productId: string) => {
-    console.log("Quick view:", productId);
-  };
-
   if (products.length === 0) return null;
 
   return (
@@ -82,9 +69,6 @@ export function RelatedProducts({
             )}
             rating={product.calificacion}
             reviews={product.cantidad_resenas}
-            onAddToCart={() => handleAddToCart(product.id)}
-            onToggleWishlist={() => handleToggleWishlist(product.id)}
-            onQuickView={() => handleQuickView(product.id)}
           />
         ))}
       </div>

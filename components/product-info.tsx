@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import { Heart, Minus, Plus, Truck } from "lucide-react";
+import { Minus, Plus, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { formatPrice } from "@/lib/utils";
 import { toast } from "sonner";
+import { useCart } from "@/contexts/CartContext";
 
 interface ProductInfoProps {
   product: {
@@ -19,18 +20,28 @@ interface ProductInfoProps {
     marca: {
       nombre: string;
     };
+    imagenes: string[];
   };
 }
 
 export function ProductInfo({ product }: ProductInfoProps) {
   const [quantity, setQuantity] = useState(1);
 
-  const handleAddToCart = () => {
-    toast.success("Producto agregado al carrito");
-  };
+  const { addToCart } = useCart();
 
-  const handleAddToWishlist = () => {
-    toast.success("Producto agregado a la lista de deseos");
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      name: product.nombre,
+      price: product.precio,
+      image: product.imagenes?.[0] || "/placeholder.svg",
+      quantity: quantity,
+    });
+    toast.success(
+      `${quantity} ${quantity > 1 ? "unidades" : "unidad"} de ${
+        product.nombre
+      } agregado al carrito`
+    );
   };
 
   return (
@@ -119,9 +130,6 @@ export function ProductInfo({ product }: ProductInfoProps) {
       <div className="flex gap-4">
         <Button className="flex-1" onClick={handleAddToCart}>
           Agregar al Carrito
-        </Button>
-        <Button variant="outline" size="icon" onClick={handleAddToWishlist}>
-          <Heart className="h-5 w-5" />
         </Button>
       </div>
 

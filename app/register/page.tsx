@@ -38,9 +38,6 @@ export default function RegisterPage() {
             <h2 className="mb-2 text-3xl font-bold tracking-tight">
               Bienvenido a Nytek
             </h2>
-            <p className="text-center text-lg text-gray-200">
-              Tu destino para la mejor tecnología
-            </p>
           </div>
         </div>
       </div>
