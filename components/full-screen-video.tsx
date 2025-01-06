@@ -16,7 +16,7 @@ export function FullScreenVideo({ src }: FullScreenVideoProps) {
   }, []);
 
   return (
-    <div className="relative w-full h-screen overflow-hidden rounded-[4rem]">
+    <div className="relative w-full h-screen overflow-hidden">
       <video
         ref={videoRef}
         className="absolute top-0 left-0 w-full h-full object-cover rounded-[4rem]"

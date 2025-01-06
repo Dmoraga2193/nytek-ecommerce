@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ShoppingCart, Heart, ChevronDown, Menu, X } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { EnhancedSearchbar } from "./enhanced-searchbar";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
+import { UserMenu } from "./UserMenu";
 
 const categorias = [
   {
@@ -64,6 +66,7 @@ const categorias = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -88,11 +91,11 @@ export default function Navbar() {
   return (
     <nav
       className={cn(
-        "w-full bg-white text-black py-4 fixed top-[32px] left-0 z-40 border-b transition-all duration-300",
+        "w-[100vw] bg-white text-black py-4 fixed top-[32px] left-0 z-40 border-b transition-all duration-300",
         isScrolled ? "rounded-b-[4rem]" : ""
       )}
     >
-      <div className="container mx-auto px-4 flex items-center justify-between gap-4">
+      <div className="container mx-auto px-4 flex items-center justify-between gap-8">
         {/* Logo y Título */}
         <Link href="/" className="flex items-center gap-2">
           <Image
@@ -118,7 +121,7 @@ export default function Navbar() {
           )}
         </Button>
 
-        {/* Desktop Navigation */}
+        {/* Enlaces de Navegación */}
         <div className="hidden md:flex items-center gap-8">
           {categorias.map((categoria) => (
             <DropdownMenu key={categoria.nombre}>
@@ -153,6 +156,18 @@ export default function Navbar() {
             <ShoppingCart className="h-6 w-6" />
             <span className="sr-only">Carrito de compras</span>
           </Button>
+          {user ? (
+            <UserMenu />
+          ) : (
+            <div className="flex items-center gap-2">
+              <Button variant="outline" asChild>
+                <Link href="/login">Iniciar sesión</Link>
+              </Button>
+              <Button asChild>
+                <Link href="/register">Registrarse</Link>
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -198,15 +213,35 @@ export default function Navbar() {
             <EnhancedSearchbar />
           </div>
 
-          <div className="mt-8 flex justify-center gap-4">
-            <Button variant="ghost" size="icon" className="relative">
+          <div className="mt-8 flex flex-col gap-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="relative self-center"
+            >
               <Heart className="h-6 w-6" />
               <span className="sr-only">Lista de deseos</span>
             </Button>
-            <Button variant="ghost" size="icon" className="relative">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="relative self-center"
+            >
               <ShoppingCart className="h-6 w-6" />
               <span className="sr-only">Carrito de compras</span>
             </Button>
+            {user ? (
+              <UserMenu />
+            ) : (
+              <div className="flex flex-col gap-2">
+                <Button variant="outline" asChild onClick={toggleMobileMenu}>
+                  <Link href="/login">Iniciar sesión</Link>
+                </Button>
+                <Button asChild onClick={toggleMobileMenu}>
+                  <Link href="/register">Registrarse</Link>
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>

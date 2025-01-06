@@ -38,8 +38,9 @@ export function ProductCard({
 
   return (
     <div className="group relative bg-white rounded-xl shadow-md transition-all duration-300 hover:shadow-lg overflow-hidden">
-      <div className="p-4 relative">
+      <div className="p-2 relative">
         {" "}
+        {/* Reducido de p-3 a p-2 */}
         {/* Relative container for absolute positioning */}
         {discount > 0 && (
           <div className="absolute top-4 left-4 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full z-10">
@@ -50,10 +51,14 @@ export function ProductCard({
           <div className="relative aspect-square mb-4 transition-transform duration-300 group-hover:scale-105">
             <Image src={image} alt={name} fill className="object-contain" />
           </div>
-          <h3 className="font-medium mb-2 text-gray-800 group-hover:text-primary transition-colors line-clamp-2">
+          <h3 className="font-medium mb-1 text-gray-800 group-hover:text-primary transition-colors line-clamp-2 max-w-full">
+            {" "}
+            {/* Agregado max-w-full */}
             {name}
           </h3>
-          <div className="flex items-center gap-2 mb-2">
+          <div className="flex items-center gap-1 mb-1">
+            {" "}
+            {/* Reducido gap-1.5 a gap-1 y mb-2 a mb-1 */}
             <span className="text-red-500 font-bold">{price}</span>
             {originalPrice !== price && (
               <span className="text-gray-500 line-through text-sm">
@@ -61,7 +66,9 @@ export function ProductCard({
               </span>
             )}
           </div>
-          <div className="flex items-center gap-2 mb-4">
+          <div className="flex items-center gap-1 mb-3">
+            {" "}
+            {/* Reducido gap-2 a gap-1 y mb-4 a mb-3 */}
             <div className="flex text-yellow-400">
               {[...Array(5)].map((_, i) => (
                 <span

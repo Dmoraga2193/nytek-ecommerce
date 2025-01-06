@@ -6,26 +6,33 @@ import { MovingTextBanner } from "@/components/moving-text-banner";
 
 export default function Home() {
   return (
-    <div className="overflow-x-hidden">
+    <div className="flex flex-col w-full overflow-x-hidden">
       <FullScreenVideo src="/video/video_inicial_2.webm" />
-      <div className="container mx-auto px-4 py-6">
-        {/* Hero Section with Sidebar */}
-        <div className="flex gap-8 mb-12">
-          <main className="flex-1">
+
+      <div className="w-full max-w-[100vw]">
+        <div className="container mx-auto px-4 py-6">
+          {/* Hero Section */}
+          <div className="mb-12">
             <HeroCarousel />
-          </main>
+          </div>
         </div>
-      </div>
 
-      {/* Moving Text Banner - Full Width */}
-      <MovingTextBanner />
+        {/* Moving Text Banner - Full Width */}
+        <div className="w-full">
+          <MovingTextBanner />
+        </div>
 
-      <div className="container mx-auto px-4 py-6">
-        {/* Flash Sales Section */}
-        <FlashSales />
+        <div className="container mx-auto px-4 py-6">
+          {/* Flash Sales Section */}
+          <section className="mb-12">
+            <FlashSales />
+          </section>
 
-        {/* Categories Showcase */}
-        <CategoriesShowcase />
+          {/* Categories Showcase */}
+          <section className="mb-12">
+            <CategoriesShowcase />
+          </section>
+        </div>
       </div>
     </div>
   );
