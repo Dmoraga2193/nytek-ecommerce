@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function RegisterPage() {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 lg:grid lg:grid-cols-2 lg:gap-4">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 lg:grid lg:grid-cols-2 lg:gap-4 mt-20">
       <div className="relative hidden h-full w-full lg:flex lg:flex-col lg:items-center lg:justify-center">
         <div className="absolute inset-0 overflow-hidden">
           <Image

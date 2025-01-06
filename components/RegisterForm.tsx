@@ -7,6 +7,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { Icons } from "@/components/ui/icons";
+import { Eye, EyeOff } from "lucide-react";
+import GoogleButton from "react-google-button";
 
 type PasswordStrength = "muy-debil" | "regular" | "fuerte";
 
@@ -60,7 +62,9 @@ export function RegisterForm() {
   const [passwordStrength, setPasswordStrength] =
     useState<PasswordStrength>("muy-debil");
   const [isLoading, setIsLoading] = useState(false);
-  const { register } = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const { register, loginWithGoogle } = useAuth();
 
   const checkPasswordStrength = (password: string): PasswordStrength => {
     const strongRegex =
@@ -107,10 +111,10 @@ export function RegisterForm() {
   };
 
   return (
-    <div className="grid gap-6">
-      <form onSubmit={handleSubmit}>
-        <div className="grid gap-2">
-          <div className="grid gap-1">
+    <div className="grid gap-8">
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="space-y-4">
+          <div className="space-y-2">
             <Label htmlFor="name">Nombre completo</Label>
             <Input
               id="name"
@@ -124,9 +128,10 @@ export function RegisterForm() {
               value={formData.name}
               onChange={handleChange}
               required
+              className="h-11"
             />
           </div>
-          <div className="grid gap-1">
+          <div className="space-y-2">
             <Label htmlFor="username">Nombre de usuario</Label>
             <Input
               id="username"
@@ -140,9 +145,10 @@ export function RegisterForm() {
               value={formData.username}
               onChange={handleChange}
               required
+              className="h-11"
             />
           </div>
-          <div className="grid gap-1">
+          <div className="space-y-2">
             <Label htmlFor="email">Correo electrónico</Label>
             <Input
               id="email"
@@ -156,65 +162,113 @@ export function RegisterForm() {
               value={formData.email}
               onChange={handleChange}
               required
+              className="h-11"
             />
           </div>
-          <div className="grid gap-1">
+          <div className="space-y-2">
             <Label htmlFor="password">Contraseña</Label>
-            <Input
-              id="password"
-              name="password"
-              placeholder="••••••••"
-              type="password"
-              autoCapitalize="none"
-              autoComplete="new-password"
-              disabled={isLoading}
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-            <PasswordStrengthIndicator strength={passwordStrength} />
-          </div>
-          <div className="grid gap-1">
-            <Label htmlFor="confirm-password">Confirmar contraseña</Label>
-            <Input
-              id="confirm-password"
-              name="confirmPassword"
-              placeholder="••••••••"
-              type="password"
-              autoCapitalize="none"
-              autoComplete="new-password"
-              disabled={isLoading}
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <Button className="mt-4" disabled={isLoading}>
-            {isLoading && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            <div className="relative">
+              <Input
+                id="password"
+                name="password"
+                placeholder="••••••••"
+                type={showPassword ? "text" : "password"}
+                autoCapitalize="none"
+                autoComplete="new-password"
+                disabled={isLoading}
+                value={formData.password}
+                onChange={handleChange}
+                required
+                className="h-11"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </Button>
+            </div>
+            {formData.password && (
+              <PasswordStrengthIndicator strength={passwordStrength} />
             )}
-            Crear cuenta
-          </Button>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="confirm-password">Confirmar contraseña</Label>
+            <div className="relative">
+              <Input
+                id="confirm-password"
+                name="confirmPassword"
+                placeholder="••••••••"
+                type={showConfirmPassword ? "text" : "password"}
+                autoCapitalize="none"
+                autoComplete="new-password"
+                disabled={isLoading}
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+                className="h-11"
+              />
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </Button>
+            </div>
+          </div>
         </div>
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className="w-full h-11 text-base"
+        >
+          {isLoading && <Icons.spinner className="mr-2 h-5 w-5 animate-spin" />}
+          Crear cuenta
+        </Button>
       </form>
+
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
           <span className="w-full border-t" />
         </div>
         <div className="relative flex justify-center text-xs uppercase">
-          <span className="bg-background px-2 text-muted-foreground">
+          <span className="bg-background px-4 text-muted-foreground">
             O regístrate con
           </span>
         </div>
       </div>
-      <Button variant="outline" type="button" disabled={isLoading}>
-        {isLoading ? (
-          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
-          <Icons.google className="mr-2 h-4 w-4" />
-        )}{" "}
-        Google
-      </Button>
+
+      <div className="flex justify-center">
+        <GoogleButton
+          type="dark"
+          disabled={isLoading}
+          label="Continuar con Google"
+          onClick={() => {
+            setIsLoading(true);
+            loginWithGoogle()
+              .catch((error) => {
+                console.error("Error registering with Google:", error);
+                toast.error("Error al registrarse con Google");
+              })
+              .finally(() => setIsLoading(false));
+          }}
+          style={{ width: "100%", borderRadius: "0.375rem" }}
+        />
+      </div>
     </div>
   );
 }
