@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Search, ShoppingCart, Heart, ChevronDown } from "lucide-react";
+import { ShoppingCart, Heart, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { EnhancedSearchbar } from "./enhanced-searchbar";
 
 const categorias = [
   {
@@ -28,18 +28,26 @@ const categorias = [
     subcategorias: [
       { href: "/categoria/macbooks/macbook-air", etiqueta: "MacBook Air" },
       {
-        href: "/categoria/macbooks/macbook-pro",
-        etiqueta: "MacBook Pro",
+        href: "/categoria/macbooks/macbook-pro-13",
+        etiqueta: "MacBook Pro 13",
+      },
+      {
+        href: "/categoria/macbooks/macbook-pro-14",
+        etiqueta: "MacBook Pro 14",
+      },
+      {
+        href: "/categoria/macbooks/macbook-pro-16",
+        etiqueta: "MacBook Pro 16",
       },
     ],
   },
   {
     nombre: "iPads",
     subcategorias: [
-      { href: "/categoria/ipads/ipad-mini", etiqueta: "iPad mini" },
-      { href: "/categoria/ipads/ipad", etiqueta: "iPad" },
-      { href: "/categoria/ipads/ipad-air", etiqueta: "iPad Air" },
       { href: "/categoria/ipads/ipad-pro", etiqueta: "iPad Pro" },
+      { href: "/categoria/ipads/ipad-air", etiqueta: "iPad Air" },
+      { href: "/categoria/ipads/ipad", etiqueta: "iPad" },
+      { href: "/categoria/ipads/ipad-mini", etiqueta: "iPad mini" },
     ],
   },
   {
@@ -86,7 +94,7 @@ export default function Navbar() {
             width={40}
             height={40}
           />
-          <Image src="/logo.svg" alt="Nytek Logo" width={120} height={120} />
+          <Image src="/logo.png" alt="Nytek Logo" width={120} height={120} />
         </Link>
 
         {/* Enlaces de Navegación */}
@@ -111,21 +119,7 @@ export default function Navbar() {
 
         {/* Barra de Búsqueda */}
         <div className="flex-1 max-w-md">
-          <div className="relative">
-            <Input
-              type="search"
-              placeholder="¿Qué estás buscando?"
-              className="w-full pl-4 pr-10 py-2 bg-gray-100 border-none text-black rounded-md"
-            />
-            <Button
-              size="icon"
-              variant="ghost"
-              className="absolute right-0 top-0 h-full px-3 text-gray-500 hover:text-black"
-            >
-              <Search className="h-5 w-5" />
-              <span className="sr-only">Buscar</span>
-            </Button>
-          </div>
+          <EnhancedSearchbar />
         </div>
 
         {/* Iconos */}

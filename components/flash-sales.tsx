@@ -8,7 +8,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Button } from "@/components/ui/button";
 import { CountdownTimer } from "./countdown-timer";
 import { ProductCard } from "./product-card";
 import { supabase } from "@/lib/supabase";
@@ -130,7 +129,7 @@ export function FlashSales() {
 
   return (
     <section>
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-12">
           <div className="space-y-4">
             <div className="flex items-center gap-3">
@@ -212,16 +211,6 @@ export function FlashSales() {
             <CarouselPrevious className="hidden md:flex -left-12 h-12 w-12" />
             <CarouselNext className="hidden md:flex -right-12 h-12 w-12" />
           </Carousel>
-        </div>
-
-        <div className="mt-12 text-center">
-          <Button
-            variant="outline"
-            size="lg"
-            className="bg-white hover:bg-gray-50 border-red-500 text-red-500 hover:text-red-600 font-medium px-8"
-          >
-            Ver Todos los Productos
-          </Button>
         </div>
       </div>
     </section>

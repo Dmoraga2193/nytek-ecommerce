@@ -21,14 +21,14 @@ export default function iPadPage() {
         <CategoryBanner
           title="iPad Pro"
           description="El iPad más potente, con chip M2 y pantalla Liquid Retina XDR. Perfecto para profesionales creativos."
-          imageSrc="/categoria/ipads/ipad-pro-banner.jpg"
+          imageSrc="/publicidad/categorias/ipad_pro_banner.webp"
           href="/categoria/ipads/ipad-pro"
         />
 
         <CategoryBanner
           title="iPad Air"
           description="Delgado, ligero y potente. El equilibrio perfecto entre rendimiento y portabilidad."
-          imageSrc="/categoria/ipads/ipad-air-banner.jpg"
+          imageSrc="/publicidad/categorias/ipad_air_banner.webp"
           href="/categoria/ipads/ipad-air"
           isReversed
         />
@@ -36,14 +36,14 @@ export default function iPadPage() {
         <CategoryBanner
           title="iPad"
           description="Versátil y asequible. El iPad para todos, perfecto para el día a día."
-          imageSrc="/categoria/ipads/ipad-banner.jpg"
+          imageSrc="/publicidad/categorias/ipad_banner.webp"
           href="/categoria/ipads/ipad"
         />
 
         <CategoryBanner
           title="iPad mini"
           description="Compacto pero poderoso. Todo el poder del iPad en un tamaño que cabe en tu mano."
-          imageSrc="/categoria/ipads/ipad-mini-banner.jpg"
+          imageSrc="/publicidad/categorias/ipad_mini_banner.webp"
           href="/categoria/ipads/ipad-mini"
           isReversed
         />

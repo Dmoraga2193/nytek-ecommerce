@@ -13,7 +13,7 @@ const slides = [
     title: "iPhone 16 Series",
     discount: "Hasta un 10%",
     type: "de Descuento",
-    link: "/shop",
+    link: "/categoria/iphone/iphone-16",
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ const slides = [
     title: "iPhone 16 Series",
     discount: "Descubre lo nuevo",
     type: "del Iphone 16",
-    link: "/shop",
+    link: "/categoria/iphone/iphone-16",
   },
   // Add more slides as needed
 ];

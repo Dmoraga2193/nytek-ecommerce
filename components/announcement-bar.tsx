@@ -29,7 +29,7 @@ export default function AnnouncementBar() {
         </span>
       </span>
       <Link
-        href="/shop"
+        href="/categoria/iphone"
         className="font-semibold hover:underline inline-block px-4"
       >
         Comprar Ahora

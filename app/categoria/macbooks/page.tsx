@@ -21,14 +21,14 @@ export default function MacBooksPage() {
         <CategoryBanner
           title="MacBook Air"
           description="Increíblemente delgado y ligero. Potenciado por el chip M2 para un rendimiento excepcional."
-          imageSrc="/categoria/macbooks/macbook-air-banner.jpg"
+          imageSrc="/publicidad/categorias/macbook_air_banner.webp"
           href="/categoria/macbooks/macbook-air"
         />
 
         <CategoryBanner
           title="MacBook Pro"
           description="Rendimiento profesional para las tareas más exigentes. Disponible en 13, 14 y 16 pulgadas."
-          imageSrc="/categoria/macbooks/macbook-pro-banner.jpg"
+          imageSrc="/publicidad/categorias/macbook_pro_banner.webp"
           href="/categoria/macbooks/macbook-pro"
           isReversed
         />

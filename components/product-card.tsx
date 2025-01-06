@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, Eye } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -29,8 +29,6 @@ export function ProductCard({
   rating,
   reviews,
   onAddToCart,
-  onToggleWishlist,
-  onQuickView,
 }: ProductCardProps) {
   const router = useRouter();
 
@@ -39,47 +37,29 @@ export function ProductCard({
   };
 
   return (
-    <div className="group relative bg-white p-4 rounded-lg h-full flex flex-col justify-between">
-      <div>
+    <div className="group relative bg-white rounded-xl shadow-md transition-all duration-300 hover:shadow-lg overflow-hidden">
+      <div className="p-4 relative">
+        {" "}
+        {/* Relative container for absolute positioning */}
         {discount > 0 && (
-          <div className="absolute top-4 left-4 bg-red-500 text-white text-xs font-medium px-2 py-1 rounded z-10">
+          <div className="absolute top-4 left-4 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full z-10">
             -{discount}%
           </div>
         )}
-        <div className="absolute top-4 right-4 flex flex-col gap-2 z-10">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="bg-white hover:bg-gray-100 shadow-sm"
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggleWishlist();
-            }}
-          >
-            <Heart className="h-5 w-5" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="bg-white hover:bg-gray-100 shadow-sm"
-            onClick={(e) => {
-              e.stopPropagation();
-              onQuickView();
-            }}
-          >
-            <Eye className="h-5 w-5" />
-          </Button>
-        </div>
         <div onClick={handleProductClick} className="cursor-pointer">
-          <div className="relative aspect-square mb-4">
+          <div className="relative aspect-square mb-4 transition-transform duration-300 group-hover:scale-105">
             <Image src={image} alt={name} fill className="object-contain" />
           </div>
-          <h3 className="font-medium mb-2 hover:text-primary transition-colors">
+          <h3 className="font-medium mb-2 text-gray-800 group-hover:text-primary transition-colors line-clamp-2">
             {name}
           </h3>
           <div className="flex items-center gap-2 mb-2">
             <span className="text-red-500 font-bold">{price}</span>
-            <span className="text-gray-500 line-through">{originalPrice}</span>
+            {originalPrice !== price && (
+              <span className="text-gray-500 line-through text-sm">
+                {originalPrice}
+              </span>
+            )}
           </div>
           <div className="flex items-center gap-2 mb-4">
             <div className="flex text-yellow-400">
@@ -92,19 +72,24 @@ export function ProductCard({
                 </span>
               ))}
             </div>
-            <span className="text-gray-500">({reviews})</span>
+            <span className="text-gray-500 text-sm">({reviews})</span>
           </div>
         </div>
+        {/* "Add to Cart" button as a tag */}
+        <div className="absolute top-4 right-4 z-10">
+          <Button
+            size="icon"
+            className="bg-yellow-400 text-primary hover:bg-red-500 hover:text-white transition-all duration-300 rounded-full shadow-md opacity-0 group-hover:opacity-100 -translate-y-full group-hover:translate-y-0" // Changed animation
+            onClick={(e) => {
+              e.stopPropagation();
+              onAddToCart();
+            }}
+          >
+            <ShoppingCart className="h-5 w-5" />
+            <span className="sr-only">Agregar al Carrito</span>
+          </Button>
+        </div>
       </div>
-      <Button
-        className="w-full bg-black text-white hover:bg-black/90"
-        onClick={(e) => {
-          e.stopPropagation();
-          onAddToCart();
-        }}
-      >
-        Agregar al Carrito
-      </Button>
     </div>
   );
 }
