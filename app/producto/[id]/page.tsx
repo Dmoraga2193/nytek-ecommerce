@@ -34,10 +34,10 @@ export default async function ProductPage({ params }: PageProps) {
   const product = await getProduct(id);
 
   return (
-    <div className="min-h-screen pt-32">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen pt-24 pb-16 mt-8">
+      <div className="container mx-auto">
         {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
+        <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-6 px-4 sm:px-0">
           <Link href="/" className="hover:text-foreground">
             Inicio
           </Link>
@@ -53,20 +53,22 @@ export default async function ProductPage({ params }: PageProps) {
             {getMainCategory(product.modelo)}
           </Link>
           <ChevronRight className="h-4 w-4" />
-          <span className="text-foreground">{product.nombre}</span>
+          <span className="text-foreground truncate">{product.nombre}</span>
         </nav>
 
         {/* Product Layout */}
-        <div className="grid gap-8 lg:grid-cols-2">
+        <div className="grid gap-6 md:gap-8 md:grid-cols-2">
           <ProductGallery images={product.imagenes} />
           <ProductInfo product={product} />
         </div>
 
         {/* Related Products */}
-        <RelatedProducts
-          categoryId={product.categoria_id}
-          currentProductId={product.id}
-        />
+        <div className="mt-12">
+          <RelatedProducts
+            categoryId={product.categoria_id}
+            currentProductId={product.id}
+          />
+        </div>
       </div>
     </div>
   );

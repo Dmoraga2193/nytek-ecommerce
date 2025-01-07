@@ -120,7 +120,7 @@ export function PersonalInfoForm({ onSubmit }: PersonalInfoFormProps) {
 
         <Button
           type="submit"
-          className="w-full h-12 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-200"
+          className="w-full h-12 bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-medium rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.01]"
           disabled={isSubmitting}
         >
           {isSubmitting ? (

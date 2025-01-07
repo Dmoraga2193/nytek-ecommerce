@@ -110,10 +110,19 @@ export function ShippingAddressForm({
           )}
         />
         <div className="flex justify-between">
-          <Button type="button" variant="outline" onClick={onBack}>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onBack}
+            className="px-6 h-12 border border-gray-200 hover:bg-gray-50 rounded-xl transition-all duration-300 flex items-center gap-2"
+          >
             Volver
           </Button>
-          <Button type="submit" disabled={isSubmitting}>
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="px-8 h-12 bg-[#2563EB] hover:bg-[#1d4ed8] text-white font-medium rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl hover:scale-[1.01]"
+          >
             {isSubmitting ? "Procesando..." : "Continuar"}
           </Button>
         </div>

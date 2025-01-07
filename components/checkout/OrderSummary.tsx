@@ -64,9 +64,9 @@ export function OrderSummary({ cart, totalPrice }: OrderSummaryProps) {
                 {formatPrice(totalPrice)}
               </span>
             </div>
-            <div className="flex justify-between items-center text-sm">
-              <span className="text-gray-600">Envío</span>
-              <span className="font-medium text-gray-900">Por calcular</span>
+            <div className="flex justify-between text-muted-foreground">
+              <span>Envío</span>
+              <span className="text-sm font-medium text-green-600">Gratis</span>
             </div>
           </div>
 

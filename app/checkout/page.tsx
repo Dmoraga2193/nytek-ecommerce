@@ -9,14 +9,26 @@ import { ShippingAddressForm } from "@/components/checkout/ShippingAddressForm";
 import { PaymentDetailsForm } from "@/components/checkout/PaymentDetailsForm";
 import { OrderSummary } from "@/components/checkout/OrderSummary";
 import { Steps } from "@/components/checkout/Steps";
+import { toast } from "sonner";
 
 const steps = [
-  { id: 1, name: "Datos Personales" },
-  { id: 2, name: "Dirección de Envío" },
-  { id: 3, name: "Detalles de Pago" },
+  {
+    id: 1,
+    name: "Datos Personales",
+    description: "Información de contacto",
+  },
+  {
+    id: 2,
+    name: "Dirección de Envío",
+    description: "Detalles de entrega",
+  },
+  {
+    id: 3,
+    name: "Detalles de Pago",
+    description: "Método de pago",
+  },
 ] as const;
 
-// Types for form data
 type PersonalInfoData = {
   name: string;
   email: string;
@@ -65,12 +77,47 @@ export default function CheckoutPage() {
     handleNextStep();
   };
 
-  const handlePaymentDetailsSubmit = (data: PaymentDetailsData) => {
+  const handlePaymentDetailsSubmit = async (data: PaymentDetailsData) => {
     setCheckoutData((prev) => ({ ...prev, paymentDetails: data }));
-    console.log("Datos completos del checkout:", {
-      ...checkoutData,
-      paymentDetails: data,
-    });
+
+    // Note: We don't immediately redirect to Webpay here anymore
+    // The WebpayForm will handle that when the user clicks "Pagar ahora"
+    if (data.paymentMethod !== "webpay") {
+      console.log("Datos completos del checkout:", {
+        ...checkoutData,
+        paymentDetails: data,
+      });
+      // Implement other payment methods here
+    }
+  };
+
+  const handleWebpayPayment = async () => {
+    try {
+      const response = await fetch("/api/webpay/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          amount: totalPrice,
+          orderId: `ORDER-${Date.now()}`,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.error || "Failed to create Webpay transaction");
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error initiating Webpay payment:", error);
+      toast.error(
+        "Error al iniciar el pago con Webpay. Por favor, intente nuevamente."
+      );
+      throw error;
+    }
   };
 
   if (!user) {
@@ -102,7 +149,7 @@ export default function CheckoutPage() {
               <Card className="border-0 shadow-lg">
                 <div className="p-6 sm:p-8">
                   <Steps steps={steps} currentStep={currentStep} />
-                  <div className="mt-12">
+                  <div className="mt-8">
                     {currentStep === 1 && (
                       <PersonalInfoForm onSubmit={handlePersonalInfoSubmit} />
                     )}
@@ -113,10 +160,14 @@ export default function CheckoutPage() {
                       />
                     )}
                     {currentStep === 3 && (
-                      <PaymentDetailsForm
-                        onSubmit={handlePaymentDetailsSubmit}
-                        onBack={handlePrevStep}
-                      />
+                      <>
+                        <PaymentDetailsForm
+                          onSubmit={handlePaymentDetailsSubmit}
+                          onBack={handlePrevStep}
+                          totalPrice={totalPrice}
+                          onWebpaySubmit={handleWebpayPayment}
+                        />
+                      </>
                     )}
                   </div>
                 </div>
