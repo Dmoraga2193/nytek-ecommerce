@@ -1,14 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import {
-  Facebook,
-  Instagram,
-  Twitter,
-  Youtube,
-  MapPin,
-  Phone,
-  Mail,
-} from "lucide-react";
+import { MapPin, Phone, Mail } from "lucide-react";
+import { FacebookIcon } from "./ui/facebook";
+import { InstagramIcon } from "./ui/instagram";
+import { XIcon } from "./ui/x";
+import { YoutubeIcon } from "./ui/youtube";
 
 const categories = [
   { name: "iPhone", href: "/categoria/iphone" },
@@ -56,16 +52,16 @@ export function Footer() {
             </p>
             <div className="flex gap-4">
               <Link href="#" className="text-gray-400 hover:text-gray-600">
-                <Facebook className="h-5 w-5" />
+                <FacebookIcon />
               </Link>
               <Link href="#" className="text-gray-400 hover:text-gray-600">
-                <Instagram className="h-5 w-5" />
+                <InstagramIcon />
               </Link>
               <Link href="#" className="text-gray-400 hover:text-gray-600">
-                <Twitter className="h-5 w-5" />
+                <XIcon />
               </Link>
               <Link href="#" className="text-gray-400 hover:text-gray-600">
-                <Youtube className="h-5 w-5" />
+                <YoutubeIcon />
               </Link>
             </div>
           </div>

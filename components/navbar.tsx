@@ -15,7 +15,7 @@ import { EnhancedSearchbar } from "./enhanced-searchbar";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import { UserMenu } from "./UserMenu";
-import { CartIcon } from "./CartIcon";
+import { CarritoIcon } from "./CartIcon";
 
 const categorias = [
   {
@@ -141,7 +141,7 @@ export default function Navbar() {
 
         {/* Iconos */}
         <div className="hidden md:flex items-center gap-4">
-          <CartIcon />
+          <CarritoIcon />
           {user ? (
             <UserMenu />
           ) : (
@@ -200,7 +200,7 @@ export default function Navbar() {
           </div>
 
           <div className="mt-8 flex flex-col gap-4">
-            <CartIcon />
+            <CarritoIcon />
             {user ? (
               <div className="flex flex-col items-center gap-2">
                 <p className="text-sm font-medium">{user.email}</p>
