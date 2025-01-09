@@ -29,7 +29,7 @@ export function CategoriesShowcase() {
   ];
 
   const categoryImages: Record<string, string> = {
-    iPhone: "/publicidad/smartphone_banner.webp",
+    iPhone: "/publicidad/iphone_banner.webp",
     iPads: "/publicidad/tablets_banner.webp",
     MacBooks: "/publicidad/portatiles_banner.webp",
     Accesorios: "/publicidad/accesorios_banner.webp",
